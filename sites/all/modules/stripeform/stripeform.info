@@ -1,0 +1,4 @@
+name = Stripe Form
+description = Provides a form and button to enable Stripe donations.
+package = Jack Flash Technologies
+core = 7.x

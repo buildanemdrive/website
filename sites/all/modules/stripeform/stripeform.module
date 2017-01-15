@@ -1,0 +1,177 @@
+<?php
+
+function stripeform_menu() {
+    $items = array(
+        "admin/config/services/stripeform" => array(
+            'title' => 'Stripe Form',
+            'description' => t('Manage Stripe Form settings.'),
+            'page callback' => 'drupal_get_form',
+            'page arguments' => array('stripeform_admin_settings'),
+            'access arguments' => array('administer stripeform'),
+            'type' => MENU_NORMAL_ITEM,
+        ),
+        "donate" => array(
+            'title' => t('Please Donate'),
+            'description' => t('Please donate to help Build an EM Drive.'),
+            'page callback' => 'drupal_get_form',
+            'page arguments' => array('stripeform_donate_form'),
+            'type' => MENU_NORMAL_ITEM,
+            'access callback' => TRUE
+        )
+    );
+    
+    return $items;
+}
+
+function stripeform_libraries_info() {
+    $items = array(
+        "stripe-php" => array(
+            'name' => "Stripe PHP API",
+            'vendor url' => 'http://www.stripe.com',
+            'path' => 'lib',
+            'version arguments' => array(
+                'file' => 'VERSION',
+                'pattern' => '/^(.*)$/'
+            ),
+            'files' => array(
+                'php' => array(
+                    'JsonSerializable.php',
+                    'Util/Set.php',
+                    'StripeObject.php',
+                    'ApiResource.php',
+                    'Account.php',
+                    'ExternalAccount.php',
+                    'AlipayAccount.php',
+                    'ApiRequestor.php',
+                    'ApiResponse.php',
+                    'ApplicationFee.php',
+                    'ApplicationFeeRefund.php',
+                    'AttachedObject.php',
+                    'SingletonApiResource.php',
+                    'Balance.php',
+                    'BalanceTransfer.php',
+                    'BankAccount.php',
+                    'BitcoinReceiver.php',
+                    'BitcoinTransaction.php',
+                    'Card.php',
+                    'Charge.php',
+                    'Collection.php',
+                    'Coupon.php',
+                    'Customer.php',
+                    'Dispute.php',
+                    'Error/Base.php',
+                    'Error/Api.php',
+                    'Error/ApiConnection.php',
+                    'Error/Authentication.php',
+                    'Error/Card.php',
+                    'Error/InvalidRequest.php',
+                    'Error/RateLimit.php',
+                    'Event.php',
+                    'FileUpload.php',
+                    'HttpClient/ClientInterface.php',
+                    'HttpClient/CurlClient.php',
+                    'Invoice.php',
+                    'InvoiceItem.php',
+                    'Order.php',
+                    'Plan.php',
+                    'Product.php',
+                    'Recipient.php',
+                    'Refund.php',
+                    'SKU.php',
+                    'Stripe.php',
+                    'Subscription.php',
+                    'Token.php',
+                    'Transfer.php',
+                    'TransferReversal.php',
+                    'Util/RequestOptions.php',
+                    'Util/Util.php'
+                )
+            )
+        )
+    );
+
+    return $items;
+}
+
+function stripeform_admin_settings() {
+    $form['stripeform_secret_key'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Stripe Form Secret Key'),
+        '#required' => TRUE,
+        '#default_value' => variable_get('stripeform_secret_key', ''),
+        '#description' => t('The secret API key for your user in Stripe.'),
+    );
+    $form['stripeform_public_key'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Stripe Form Public Key'),
+        '#required' => TRUE,
+        '#default_value' => variable_get('stripeform_public_key', ''),
+        '#description' => t('The public API key for your user in Stripe.'),
+    );
+
+    return system_settings_form($form);
+}
+
+function stripeform_donate_form() {
+    $form = array(
+	"intro_text" => array(
+	    "#markup" => "<p>Please consider donating to this project. Enter an amount below and you will be taken to a secure form from Stripe that will protect your credit card information and let you donate to the project. Every little bit helps and we thank you!<p>"
+        ),
+        "amount" => array(
+            '#title' => t('Amount'),
+            '#type' => 'textfield',
+            '#required' => TRUE,
+            '#size' => 25,
+            #'#attributes' => array(
+            #    'placeholder' => t('Amount')
+            #)
+        ),
+        'stripeEmail' => array(
+            '#type' => 'hidden'
+        ),
+        'stripeId' => array(
+            '#type' => 'hidden'
+        ),
+        "actions" => array (
+            '#type' => 'actions',
+            'submit' => array (
+                '#type' => 'submit',
+                '#value' => 'Please Donate'
+            )
+        )
+    );
+
+    return $form;
+}
+
+function stripeform_theme($existing, $type, $theme, $path) {
+    $items = array(
+       'stripeform_donate_form' => array(
+            'render element' => 'form',
+            'template' => 'stripeform_form',
+            'path' => $path . '/templates'
+        )
+    );
+
+    return $items;
+}
+
+# TODO: Validate the donate form submission.
+    # Source must exist
+    # Value must be at least 50 cents.
+
+function stripeform_donate_form_submit($form_id, &$form_state) {
+    libraries_load('stripe-php');
+    $_REQUEST['stripeform_amount'] = $form_state['values']['amount'];
+    \Stripe\Stripe::setApiKey(variable_get('stripeform_secret_key'));
+    \Stripe\Charge::create(array(
+        'amount' => $form_state['values']['amount'] * 100,
+        'currency' => 'usd',
+        'source' => $form_state['values']['stripeId'],
+        'description' => 'Donation - Thank You!',
+        'metadata' => array('email' => $form_state['values']['stripeEmail'])
+    ));
+    drupal_goto(base_path() . request_path() .'/thank-you');
+}
+
+# TODO: Provide a donate block.

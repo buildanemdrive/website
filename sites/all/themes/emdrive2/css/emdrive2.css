@@ -1,0 +1,187 @@
+@font-face {
+    font-family: GothamBook;
+    src: url('/sites/all/themes/emdrive2/fonts/ufonts.com_gotham-book.ttf');
+}
+
+#header {
+	background-image: url('/sites/all/themes/emdrive2/images/PIA09411_ip.jpg');
+	height: 375px;
+	/*height: 250px;*/
+	background-size: cover;
+}
+
+#page {
+	width: 960px;
+	margin: auto;
+}
+
+#page-wrapper {
+	background-color: lightGray;
+}
+
+#main {
+    margin-bottom: 20px;
+}
+
+div#name-and-slogan {
+    float: none;
+    /* REMOVE THIS*/
+    text-align: center;
+    padding-top: 125px;
+    /*padding-top: 80px;*/
+    font-family: GothamBook;
+    font-size: 32pt;
+    text-shadow: -5px 5px gray;
+    /*padding-left: 20px*/
+}
+
+#name-and-slogan strong {
+    color: white;
+}
+
+body {
+    font-family: Arial;
+}
+
+h1#page-title {
+    font-size: 24pt;
+    font-family: Arial;
+    font-style: italic;
+    color: orange;
+    font-weight: bold;
+    margin-top: 65px;
+}
+
+#content .section {
+    margin-left: 175px;
+    margin-right: 175px;
+}
+
+strong {
+    color: orange;
+}
+
+div#footer-wrapper {
+    background-image: url('/sites/all/themes/emdrive2/images/578804main_pia14417.jpg');
+    background-size: cover;
+    background-position-y: -100px;
+    padding-right: 0px;
+    padding-left: 0px;
+    padding-bottom: 0px;
+}
+
+div#footer-wrapper .section {
+    margin-top: 150px;
+}
+
+div#footer {
+    margin-right: 0px;
+    margin-left: 0px;
+    width: 100%;
+}
+
+#footer div.block {
+    background-color: white;
+    color: brown;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    text-align: center;
+}
+
+#footer .block p {
+    margin: 0px;
+}
+
+.mailchimp-signup-subscribe-form, #stripeform-donate-form {
+    font-size: 14pt;
+}
+
+.mailchimp-signup-subscribe-form label, #stripeform-donate-form label {
+    display: inline-block;
+    width: 150px;
+    text-align: right;
+    color: orange;
+    font-weight: normal;
+}
+
+.mailchimp-signup-subscribe-form label:after, #stripeform-donate-form label:after {
+    content: ":";
+}
+
+.mailchimp-signup-subscribe-form input, #stripeform-donate-form input {
+    border: none;
+    border-bottom: 1px solid orange;
+}
+
+#conversions input[type=text] {
+    width: 97%;
+}
+
+.mailchimp-signup-subscribe-form .form-actions, #stripeform-donate-form .form-actions {
+    text-align: center;
+    margin-top: 0px;
+}
+
+.mailchimp-signup-subscribe-form .form-actions input.form-submit, #stripeform-donate-form input.form-submit {
+    background-color: orange;
+    background-image: none;
+    border-radius: 0px;
+    color: white;
+    font-weight: bold;
+}
+
+form#mailchimp-signup-subscribe-block-sign-up-for-our-newsletter-form, #stripeform-donate-form {
+    margin-top: 30px;
+}
+
+form#mailchimp-signup-subscribe-block-sign-up-for-our-newsletter-form .form-item {
+    margin-bottom: 0px;
+}
+
+.front #main-menu-links .active {
+    visibility: hidden;
+    height: 0px;
+}
+
+#main-menu-links li {
+    text-transform: lowercase;
+    color: orange;
+    font-style: italic;
+    font-weight: bold;
+    float: none;
+    text-align: center;
+}
+
+ul#main-menu-links {
+    font-size: 12pt;
+}
+
+#main-menu-links li a {
+    color: orange;
+}
+
+.front #main-menu-links li a {
+    float: none;
+}
+
+#conversions #stripeform-donate-form {
+    border-left: 1px solid orange;
+}
+
+#conversions form {
+    float: left;
+    width: 265px;
+    padding: 0px 10px 0px 10px;
+}
+
+#conversions #mailchimp-signup-subscribe-block-sign-up-for-our-newsletter-form label {
+    text-align: left;
+}
+
+#conversions label {
+    width: 100%;
+}
+
+#conversions input[type=submit] {
+    width: 100%;
+}
