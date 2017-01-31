@@ -59,6 +59,7 @@ sites/all/modules/transliteration/
 sites/all/modules/views/
 sites/all/modules/wysiwyg/
 sites/all/modules/xmlsitemap/
+sites/all/modules/elements/
 sites/all/vendor/
 sites/example.sites.php
 
