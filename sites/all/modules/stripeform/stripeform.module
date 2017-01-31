@@ -23,6 +23,27 @@ function stripeform_menu() {
     return $items;
 }
 
+function stripeform_block_info() {
+    $blocks['stripeform'] = array (
+        'info' => t('Stripe Form.'), 
+        'cache' => DRUPAL_CACHE_GLOBAL,
+    );
+    return $blocks;
+}
+
+function stripeform_block_view($delta = '') {
+    $block = array();
+
+    switch($delta) {
+        case 'stripeform':
+            $block['subject'] = t('Please donate');
+            $block['content'] = drupal_get_form('stripeform_donate_form');
+            break;
+    }
+
+    return $block;
+}
+
 function stripeform_libraries_info() {
     $items = array(
         "stripe-php" => array(
@@ -115,16 +136,15 @@ function stripeform_admin_settings() {
 function stripeform_donate_form() {
     $form = array(
 	"intro_text" => array(
-	    "#markup" => "<p>Please consider donating to this project. Enter an amount below and you will be taken to a secure form from Stripe that will protect your credit card information and let you donate to the project. Every little bit helps and we thank you!<p>"
         ),
         "amount" => array(
             '#title' => t('Amount'),
-            '#type' => 'textfield',
-            '#required' => TRUE,
+            '#type' => 'numberfield',
             '#size' => 25,
-            #'#attributes' => array(
-            #    'placeholder' => t('Amount')
-            #)
+            '#value' => 10,
+            '#attributes' => array(
+                'required' => 'true',
+            ),
         ),
         'stripeEmail' => array(
             '#type' => 'hidden'
@@ -149,8 +169,12 @@ function stripeform_theme($existing, $type, $theme, $path) {
        'stripeform_donate_form' => array(
             'render element' => 'form',
             'template' => 'stripeform_form',
-            'path' => $path . '/templates'
-        )
+            'path' => $path . '/templates',
+        ),
+        'stripeform_donate_block' => array(
+            'template' => 'stripeform_form',
+            'path' => $path . '/templates',
+        ),
     );
 
     return $items;

@@ -142,6 +142,23 @@
 
   </div></div> <!-- /.section, /#header -->
 
+  <?php if ($main_menu): ?>
+    <div id="main-menu" class="navigation">
+      <?php print theme('links__system_main_menu', array(
+        'links' => $main_menu,
+        'attributes' => array(
+          'id' => 'main-menu-links',
+          'class' => array('links', 'clearfix'),
+        ),
+        'heading' => array(
+          'text' => t('Main menu'),
+          'level' => 'h2',
+          'class' => array('element-invisible'),
+        ),
+      )); ?>
+    </div> <!-- /#main-menu -->
+  <?php endif; ?>
+
   <?php if ($messages): ?>
     <div id="messages"><div class="section clearfix">
       <?php print $messages; ?>
@@ -160,6 +177,15 @@
       <div id="breadcrumb"><?php print $breadcrumb; ?></div>
     <?php endif; ?>
 
+    <?php if ($page['highlighted']): ?><div id="highlighted"><?php print render($page['highlighted']); ?></div><?php endif; ?>
+    <?php print render($title_prefix); ?>
+    <?php if ($title): ?>
+      <h1 class="title" id="page-title">
+        <?php print $title; ?>
+      </h1>
+    <?php endif; ?>
+    <?php print render($title_suffix); ?>
+
     <?php if ($page['sidebar_first']): ?>
       <div id="sidebar-first" class="column sidebar"><div class="section">
         <?php print render($page['sidebar_first']); ?>
@@ -167,15 +193,7 @@
     <?php endif; ?>
 
     <div id="content" class="column"><div class="section">
-      <?php if ($page['highlighted']): ?><div id="highlighted"><?php print render($page['highlighted']); ?></div><?php endif; ?>
       <a id="main-content"></a>
-      <?php print render($title_prefix); ?>
-      <?php if ($title): ?>
-        <h1 class="title" id="page-title">
-          <?php print $title; ?>
-        </h1>
-      <?php endif; ?>
-      <?php print render($title_suffix); ?>
       <?php if ($tabs): ?>
         <div class="tabs">
           <?php print render($tabs); ?>
@@ -189,28 +207,6 @@
       <?php endif; ?>
       <?php print render($page['content']); ?>
       <?php print $feed_icons; ?>
-
-      <?php
-        $block = module_invoke('mailchimp_signup', 'block_view', 'sign_up_for_our_newsletter');
-        print render($block['content']);
-       ?>
-
-      <?php if ($main_menu): ?>
-        <div id="main-menu" class="navigation">
-          <?php print theme('links__system_main_menu', array(
-            'links' => $main_menu,
-            'attributes' => array(
-              'id' => 'main-menu-links',
-              'class' => array('links', 'clearfix'),
-            ),
-            'heading' => array(
-              'text' => t('Main menu'),
-              'level' => 'h2',
-              'class' => array('element-invisible'),
-            ),
-          )); ?>
-        </div> <!-- /#main-menu -->
-      <?php endif; ?>
 
     </div></div> <!-- /.section, /#content -->
 
